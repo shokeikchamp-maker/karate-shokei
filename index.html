@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ryu Kyu Shorin Ryu Karate Do India - Shokei Tournament Registration</title>
+  
+  <!-- Razorpay Checkout Script -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+  <style>
+    :root {
+      --primary: #8b0000;
+      --primary-dark: #5c0000;
+      --bg-color: #f0ebf8;
+      --card-bg: #ffffff;
+      --text-main: #202124;
+      --text-sub: #70757a;
+      --border-color: #dadce0;
+      --error-color: #d93025;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      padding: 24px 12px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 680px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      padding: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+    }
+
+    .header-card {
+      border-top: 10px solid var(--primary);
+    }
+
+    .header-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--primary);
+      text-align: center;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .header-subtitle {
+      font-size: 18px;
+      font-weight: 600;
+      color: #333;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .description {
+      font-size: 13px;
+      color: var(--text-sub);
+      line-height: 1.6;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 12px;
+    }
+
+    .account-strip {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      color: var(--text-sub);
+      margin-bottom: 10px;
+    }
+
+    .account-strip a {
+      color: #1a73e8;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .account-note {
+      font-size: 12px;
+      color: var(--text-sub);
+      margin-bottom: 12px;
+    }
+
+    .required-star {
+      color: var(--error-color);
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    label.field-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="number"],
+    select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      font-size: 14px;
+      outline: none;
+    }
+
+    input:focus, select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 1px var(--primary);
+    }
+
+    .checkbox-group, .radio-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .option-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .option-item input {
+      accent-color: var(--primary);
+      width: 18px;
+      height: 18px;
+    }
+
+    .note-text {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--error-color);
+      margin-bottom: 10px;
+    }
+
+    .fee-badge-box {
+      background-color: #fdf6f6;
+      border-left: 4px solid var(--primary);
+      padding: 12px;
+      margin-bottom: 16px;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .payment-card {
+      background: #fffdfd;
+      border: 1px dashed var(--primary);
+      text-align: center;
+    }
+
+    .total-display {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--primary);
+      margin: 10px 0;
+    }
+
+    .qr-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin: 12px 0;
+    }
+
+    #qrCodeImg {
+      width: 190px;
+      height: 190px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 8px;
+      background: #fff;
+    }
+
+    .btn-gpay {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #000;
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 15px;
+      width: 100%;
+      max-width: 300px;
+      margin-top: 8px;
+    }
+
+    .btn-razorpay {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #3399cc;
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 6px;
+      border: none;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 15px;
+      width: 100%;
+      max-width: 300px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    .file-upload-box {
+      border: 2px dashed var(--border-color);
+      padding: 20px;
+      border-radius: 6px;
+      text-align: center;
+      background: #fff;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .file-upload-box input[type="file"] {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .file-preview {
+      margin-top: 12px;
+      max-height: 160px;
+      border-radius: 6px;
+      display: none;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .submit-btn {
+      background-color: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 14px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .error-msg {
+      color: var(--error-color);
+      font-size: 12px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <form id="tournamentForm" class="container">
+    
+    <!-- Header Section -->
+    <div class="card header-card">
+      <div class="header-title">🥋 RYU KYU SHORIN RYU KARATE DO INDIA 🥋</div>
+      <div class="header-subtitle">SHOKEI TOURNAMENT REGISTRATION</div>
+      <p class="description">
+        JOIN US FOR AN EXCITING KARATE CHAMPIONSHIP ON 24TH DECEMBER 2026, FEATURING KATA AND KUMITE COMPETITIONS. SHOWCASE YOUR SKILLS, DISCIPLINE, CONFIDENCE, AND FIGHTING SPIRIT. ALL STUDENTS ARE ENCOURAGED TO PARTICIPATE AND GIVE THEIR BEST PERFORMANCE. REGISTER NOW AND BE A PART OF THIS EXCITING SHOKEI MARTIAL ARTS EVENT !!
+      </p>
+
+      <div class="account-strip">
+        <span>your-email@example.com</span>
+        <a href="#">Switch account</a>
+      </div>
+      <p class="account-note">The name, email, and photo associated with your Google account will be recorded when you upload files and submit this form.</p>
+      <p style="font-size: 12px; color: var(--error-color);">* Indicates required question</p>
+    </div>
+
+    <!-- Email Field -->
+    <div class="card">
+      <div class="form-group">
+        <label class="field-label">Email <span class="required-star">*</span></label>
+        <input type="email" id="email" required placeholder="Your email address">
+        <label class="option-item" style="margin-top: 8px; border: none; padding: 0;">
+          <input type="checkbox" checked required>
+          <span style="font-size: 13px;">Record your email as to be included with my response</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Section 1: Informations -->
+    <div class="card">
+      <div class="section-title"># INFORMATIONS #</div>
+
+      <div class="form-group">
+        <label class="field-label">1. BRANCH NAME <span class="required-star">*</span></label>
+        <input type="text" id="branchName" required placeholder="Enter Branch Name">
+      </div>
+
+      <div class="form-group">
+        <label class="field-label">2. ORGANIZATION STYLE (KARATE STYLE) <span class="required-star">*</span></label>
+        <input type="text" id="karateStyle" required placeholder="Enter Karate Style">
+      </div>
+
+      <div class="form-group">
+        <label class="field-label">3. MASTER NAME <span class="required-star">*</span></label>
+        <input type="text" id="masterName" required placeholder="Enter Master Name">
+      </div>
+
+      <div class="form-group">
+        <label class="field-label">4. MASTER MOBILE NO. <span class="required-star">*</span></label>
+        <input type="tel" id="masterMobile" required pattern="[0-9]{10}" placeholder="10-digit mobile number">
+      </div>
+    </div>
+
+    <!-- Section 2: Participant Details -->
+    <div class="card">
+      <div class="section-title"># PARTICIPANT DETAILS #</div>
+
+      <div class="form-group">
+        <label class="field-label">1. STUDENT FULL NAME <span class="required-star">*</span></label>
+        <input type="text" id="studentName" required placeholder="Enter Full Name">
+      </div>
+
+      <div class="form-group">
+        <label class="field-label">2. STUDENT AGE <span class="required-star">*</span></label>
+        <input type="number" id="studentAge" required placeholder="Enter Age">
+      </div>
+
+      <div class="form-group">
+        <label class="field-label">3. STUDENT WEIGHT <span class="required-star">*</span></label>
+        <input type="text" id="studentWeight" required placeholder="e.g. 45 kg">
+      </div>
+
+      <div class="form-group">
+        <label class="field-label">4. STUDENT SCHOOL NAME <span class="required-star">*</span></label>
+        <input type="text" id="schoolName" required placeholder="Enter School Name">
+      </div>
+
+      <div class="form-group">
+        <label class="field-label">5. CURRENT BELT <span class="required-star">*</span></label>
+        <input type="text" id="currentBelt" required placeholder="e.g. Yellow Belt / 8th Kyu">
+      </div>
+
+      <div class="form-group">
+        <label class="field-label">6. PARENTS NAME <span class="required-star">*</span></label>
+        <input type="text" id="parentName" required placeholder="Enter Parent Name">
+      </div>
+
+      <div class="form-group">
+        <label class="field-label">7. PARENT MOBILE NO. <span class="required-star">*</span></label>
+        <input type="tel" id="parentMobile" required pattern="[0-9]{10}" placeholder="10-digit mobile number">
+      </div>
+    </div>
+
+    <!-- Section 3: Events Details -->
+    <div class="card">
+      <div class="section-title"># EVENTS DETAILS #</div>
+      <div class="note-text">NOTE - BRING YOUR COMPLETE KARATE KIT WITH SAFETY GUARDS</div>
+
+      <div class="form-group">
+        <label class="field-label">Select Regular Events</label>
+        <div class="checkbox-group">
+          <label class="option-item">
+            <input type="checkbox" class="regular-event" value="KATA"> KATA
+          </label>
+          <label class="option-item">
+            <input type="checkbox" class="regular-event" value="KUMITE"> KUMITE
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="field-label">Black Belt Events</label>
+        <div class="checkbox-group">
+          <label class="option-item">
+            <input type="checkbox" class="blackbelt-event" value="BLACK BELT KATA"> BLACK BELT KATA
+          </label>
+          <label class="option-item">
+            <input type="checkbox" class="blackbelt-event" value="BLACK BELT KUMITE"> BLACK BELT KUMITE
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 4: Weapons -->
+    <div class="card">
+      <div class="section-title"># WEAPONS #</div>
+      <div class="note-text">NOTE - ALL STUDENTS MUST CARRY THEIR WEAPONS WITH THEM.</div>
+
+      <div class="form-group">
+        <label class="field-label">1. WEAPONS TYPE</label>
+        <div class="checkbox-group">
+          <label class="option-item">
+            <input type="checkbox" class="weapon-event" value="SAI"> SAI
+          </label>
+          <label class="option-item">
+            <input type="checkbox" class="weapon-event" value="TUMFA"> TUMFA
+          </label>
+          <label class="option-item">
+            <input type="checkbox" class="weapon-event" value="KHAMA"> KHAMA
+          </label>
+          <label class="option-item">
+            <input type="checkbox" class="weapon-event" value="NUNCHUCKS"> NUNCHUCKS
+          </label>
+          <label class="option-item">
+            <input type="checkbox" class="weapon-event" value="BOO(LATHI)"> BOO (LATHI)
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 5: Fees Structure & Payment -->
+    <div class="card">
+      <div class="section-title"># FEES STRUCTURES #</div>
+      <div class="fee-badge-box">
+        1. SINGLE EVENT (KATA OR KUMITE OR WEAPONS) - <b>₹600 ONLY</b><br>
+        2. DOUBLE EVENT (KATA / KUMITE) - <b>₹800 ONLY</b><br>
+        3. THREE EVENT (KATA / KUMITE / WEAPONS) - <b>₹1000 ONLY</b><br>
+        4. BLACK BELT EVENTS KATA - <b>₹1200 ONLY</b><br>
+        5. BLACK BELT EVENTS KUMITE - <b>₹1200 ONLY</b>
+      </div>
+    </div>
+
+    <!-- Dynamic Payment QR & Online Portals -->
+    <div class="card payment-card">
+      <div class="section-title">DYNAMIC PAYMENT PORTAL</div>
+      <div class="total-display">Total Calculated Fee: ₹<span id="totalFeeDisplay">0</span></div>
+      <p style="font-size: 13px; color: var(--text-sub);">Scan QR Code or pay instantly via Razorpay with auto-loaded total amount.</p>
+
+      <div class="qr-container">
+        <img id="qrCodeImg" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=Select%20Events" alt="UPI QR Code">
+      </div>
+
+      <a id="gpayDeepLink" href="#" class="btn-gpay" style="display: none;">
+        <span>Open in Google Pay / UPI</span>
+      </a>
+
+      <!-- Razorpay Payment Button -->
+      <button type="button" id="razorpayBtn" class="btn-razorpay" style="display: none;">
+        <span>Pay via Razorpay</span>
+      </button>
+    </div>
+
+    <!-- Payment Screenshot Attachment (Image Only Restriction) -->
+    <div class="card">
+      <div class="form-group">
+        <label class="field-label">UPLOAD PAYMENT SCREENSHOT <span class="required-star">*</span></label>
+        <p style="font-size: 12px; color: var(--text-sub);">Parents share screenshot: strictly payment screenshot images only (.png, .jpg, .jpeg, .webp).</p>
+        
+        <div class="file-upload-box">
+          <span id="fileBoxText">📁 Click or drag payment screenshot here</span>
+          <input type="file" id="paymentScreenshot" accept="image/png, image/jpeg, image/jpg, image/webp" required>
+        </div>
+        <img id="imagePreview" class="file-preview" alt="Payment Screenshot Preview">
+        <span class="error-msg" id="fileError">Invalid file type! Only image screenshots are allowed.</span>
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" class="submit-btn">Submit Registration Form</button>
+
+  </form>
+
+  <script>
+    // Config: Update with your real UPI VPA, Name, and Razorpay Key ID
+    const VPA_ID = "your-upi-id@upi"; 
+    const PAYEE_NAME = "Ryu Kyu Shorin Ryu Karate Do";
+    const RAZORPAY_KEY_ID = "rzp_test_your_actual_key_id"; 
+
+    const regularEvents = document.querySelectorAll('.regular-event');
+    const blackbeltEvents = document.querySelectorAll('.blackbelt-event');
+    const weaponEvents = document.querySelectorAll('.weapon-event');
+    
+    const totalFeeDisplay = document.getElementById('totalFeeDisplay');
+    const qrCodeImg = document.getElementById('qrCodeImg');
+    const gpayDeepLink = document.getElementById('gpayDeepLink');
+    const razorpayBtn = document.getElementById('razorpayBtn');
+    const fileInput = document.getElementById('paymentScreenshot');
+    const imagePreview = document.getElementById('imagePreview');
+    const fileBoxText = document.getElementById('fileBoxText');
+    const form = document.getElementById('tournamentForm');
+
+    // Calculate total fees dynamically per selected event item
+    function calculateFees() {
+      let totalFee = 0;
+
+      // Each regular event adds ₹600
+      regularEvents.forEach(cb => { 
+        if(cb.checked) totalFee += 600; 
+      });
+
+      // Each weapon event adds ₹600
+      weaponEvents.forEach(cb => { 
+        if(cb.checked) totalFee += 600; 
+      });
+
+      // Each black belt event adds ₹1200
+      blackbeltEvents.forEach(cb => { 
+        if(cb.checked) totalFee += 1200; 
+      });
+
+      totalFeeDisplay.textContent = totalFee;
+
+      if (totalFee > 0) {
+        const note = encodeURIComponent(`Shokei Karate Registration Fee`);
+        const payee = encodeURIComponent(PAYEE_NAME);
+        const upiUri = `upi://pay?pa=${VPA_ID}&pn=${payee}&am=${totalFee}&cu=INR&tn=${note}`;
+        
+        qrCodeImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upiUri)}`;
+        gpayDeepLink.href = upiUri;
+        gpayDeepLink.style.display = 'inline-flex';
+        razorpayBtn.style.display = 'inline-flex';
+      } else {
+        qrCodeImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=Select%20Events`;
+        gpayDeepLink.style.display = 'none';
+        razorpayBtn.style.display = 'none';
+      }
+    }
+
+    [...regularEvents, ...blackbeltEvents, ...weaponEvents].forEach(cb => {
+      cb.addEventListener('change', calculateFees);
+    });
+
+    // Razorpay Integration Trigger
+    razorpayBtn.addEventListener('click', function() {
+      const totalFee = parseInt(totalFeeDisplay.textContent);
+      const studentName = document.getElementById('studentName').value || "Participant";
+      const studentEmail = document.getElementById('email').value || "test@example.com";
+      const studentMobile = document.getElementById('parentMobile').value || "9999999999";
+
+      if (totalFee <= 0) {
+        alert('Please select at least one event first.');
+        return;
+      }
+
+      var options = {
+        "key": RAZORPAY_KEY_ID,
+        "amount": totalFee * 100, // Amount is in currency subunits (Paise)
+        "currency": "INR",
+        "name": "Ryu Kyu Shorin Ryu Karate Do",
+        "description": "Shokei Tournament Registration Fee",
+        "handler": function (response) {
+          alert("Razorpay Payment Successful! Payment ID: " + response.razorpay_payment_id);
+        },
+        "prefill": {
+          "name": studentName,
+          "email": studentEmail,
+          "contact": studentMobile
+        },
+        "theme": {
+          "color": "#8b0000"
+        }
+      };
+      var rzp1 = new Razorpay(options);
+      rzp1.open();
+    });
+
+    fileInput.addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      const fileError = document.getElementById('fileError');
+
+      if (file) {
+        if (!file.type.startsWith('image/')) {
+          fileError.style.display = 'block';
+          fileInput.value = '';
+          imagePreview.style.display = 'none';
+          fileBoxText.textContent = '📁 Click or drag payment screenshot here';
+          return;
+        }
+
+        fileError.style.display = 'none';
+        fileBoxText.textContent = `Attached: ${file.name}`;
+        
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          imagePreview.src = event.target.result;
+          imagePreview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      if (parseInt(totalFeeDisplay.textContent) === 0) {
+        alert('Please select at least one event to participate.');
+        return;
+      }
+      alert('Ryu Kyu Shorin Ryu Karate Do India - Registration Submitted Successfully!');
+      form.reset();
+      calculateFees();
+      imagePreview.style.display = 'none';
+      fileBoxText.textContent = '📁 Click or drag payment screenshot here';
+    });
+  </script>
+</body>
+</html>
